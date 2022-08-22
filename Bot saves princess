@@ -1,0 +1,40 @@
+#Language: Python 3
+
+#!/usr/bin/python
+
+def displayPathtoPrincess(n,grid):
+#print all the moves.
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            if grid[i][j] == 'p':
+                #print(grid[i][j])
+                p1 = i
+                p2 = j
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            if grid[i][j] == 'm':
+                #print(grid[i][j])
+                m1 = i
+                m2 = j
+    #print(p1,p2,m1,m2)
+    while m1!=p1:
+        if m1 > p1:
+            print("UP")
+            m1-=1
+        else:
+            print("DOWN")
+            m1+=1
+    while m2!=p2:
+        if m2>p2:
+            print("LEFT")
+            m2-=1
+        else:
+            print("RIGHT")
+            m2+=1
+
+m = int(input())
+grid = [] 
+for i in range(0, m): 
+    grid.append(input().strip())
+
+displayPathtoPrincess(m,grid)
