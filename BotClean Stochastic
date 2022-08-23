@@ -1,0 +1,31 @@
+#!/bin/python3
+
+def nextMove(posr, posc, board):
+    if board[posr][posc] == 'd':
+        print("CLEAN")
+    else:
+        for i in range(0,5):
+            for j in range(0,5):
+                if board[i][j] == 'd':
+                    if i > posr:
+                        print("DOWN")
+                        posr = i
+                        break
+                    elif i < posr:
+                        print("UP")
+                        posr = i
+                        break
+                    elif j > posc:
+                        print("RIGHT")
+                        posc = j
+                        break
+                    elif j < posc:
+                        print("LEFT")
+                        posc = j
+                        break
+    return
+
+if __name__ == "__main__":
+    pos = [int(i) for i in input().strip().split()]
+    board = [[j for j in input().strip()] for i in range(5)]
+    nextMove(pos[0], pos[1], board)
