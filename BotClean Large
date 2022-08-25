@@ -1,0 +1,39 @@
+def next_move(posx, posy, dimx, dimy, board):
+    #Helper function to check if a given cell is dirty or not
+    def isDirty(board, i, j):
+        if board[i][j] == "d":
+            return True
+        else:
+            return False
+    #Helper function to print the next move
+    def printNextMove(nextx, nexty):
+        if nextx < posx:
+            print("UP")
+        elif nextx > posx:
+            print("DOWN")
+        elif nexty < posy:
+            print("LEFT")
+        elif nexty > posy:
+            print("RIGHT")
+        else:
+            print("CLEAN")
+    #If the current cell is dirty, CLEAN it and return
+    if isDirty(board, posx, posy):
+        printNextMove(posx, posy)
+        return
+    #If the current cell is clean, look for a dirty cell around it
+    for i in range(posx-1, posx+2):
+        for j in range(posy-1, posy+2):
+            #Make sure that the indices are valid and the cell is dirty
+            if i >= 0 and i < dimx and j >= 0 and j < dimy and isDirty(board, i, j):
+                #If a dirty cell is found, print the next move and return
+                printNextMove(i, j)
+                return
+    #If no dirty cell is found, the next move is to move DOWN
+    printNextMove(posx+1, posy)
+
+if __name__ == "__main__":
+    pos = [int(i) for i in input().strip().split()]
+    dim = [int(i) for i in input().strip().split()]
+    board = [[j for j in input().strip()] for i in range(dim[0])]
+    next_move(pos[0], pos[1], dim[0], dim[1], board)
