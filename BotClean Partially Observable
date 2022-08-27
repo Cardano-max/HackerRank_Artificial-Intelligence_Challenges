@@ -1,0 +1,71 @@
+#!/usr/bin/python3
+
+def next_move(posx, posy, board):
+    move = ''
+    if board[posx][posy] == 'd':
+        move = 'CLEAN'
+        return move
+    
+    # Check adjacent cells
+    adjacent = []
+    for i in range(4):
+        x = posx + d_row[i]
+        y = posy + d_col[i]
+        # Check if adjacent cell is dirty
+        if 0 <= x < 5 and 0 <= y < 5 and board[x][y] == 'd':
+            adjacent.append((x, y))
+    
+    if adjacent:
+        # Find the cell with minimum distance
+        best = 0
+        mindist = distance(posx, posy, adjacent[0][0], adjacent[0][1])
+        for i in range(len(adjacent)):
+            if mindist > distance(posx, posy, adjacent[i][0], adjacent[i][1]):
+                mindist = distance(posx, posy, adjacent[i][0], adjacent[i][1])
+                best = i
+        move = direction(posx, posy, adjacent[best][0], adjacent[best][1])
+        return move
+    
+    # Move in the direction of the nearest dirty cell
+    adjacent = []
+    for i in range(4):
+        x = posx + d_row[i]
+        y = posy + d_col[i]
+        # Check if adjacent cell is not visited
+        if 0 <= x < 5 and 0 <= y < 5 and board[x][y] != 'o':
+            adjacent.append((x, y))
+    
+    # Find the cell with minimum distance
+    best = 0
+    mindist = distance(posx, posy, adjacent[0][0], adjacent[0][1])
+    for i in range(len(adjacent)):
+        if mindist > distance(posx, posy, adjacent[i][0], adjacent[i][1]):
+            mindist = distance(posx, posy, adjacent[i][0], adjacent[i][1])
+            best = i
+    move = direction(posx, posy, adjacent[best][0], adjacent[best][1])
+    return move
+    
+    
+def distance(x1, y1, x2, y2):
+    return abs(x1 - x2) + abs(y1 - y2)
+    
+    
+def direction(x1, y1, x2, y2):
+    if x1 == x2 and y1 < y2:
+        return 'RIGHT'
+    if x1 == x2 and y1 > y2:
+        return 'LEFT'
+    if x1 > x2 and y1 == y2:
+        return 'UP'
+    if x1 < x2 and y1 == y2:
+        return 'DOWN'
+    
+
+#global variables
+d_row = [1, 0, -1, 0]
+d_col = [0, 1, 0, -1]
+
+if __name__ == "__main__":
+    pos = [int(i) for i in input().strip().split()]
+    board = [[j for j in input().strip()] for i in range(5)]
+    print(next_move(pos[0], pos[1], board))
